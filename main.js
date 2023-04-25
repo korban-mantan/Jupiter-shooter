@@ -19,16 +19,31 @@ muteButton.addEventListener('click', () => {
   localStorage.setItem('isMuted', audioElement.muted)
 })
 
-// function to change background when a button is clicked (start/exit button)
-const button = document.getElementById('myButton')
-const body = document.getElementById('body')
-let changeBackground = true
+/** close menu and start game */
+const startForm = document.getElementById('inputField')
+const nameField = document.getElementById('nameField')
+const startBtn = document.getElementById('startBtn')
+const gameMenu = document.getElementById('gameMenu')
+const gameBody = document.getElementById('game')
 
-button.addEventListener('click', () => {
-  if (changeBackground) {
-    body.style.backgroundImage = "url('assets/img/bg2.png')"
+// Disable button when there is no value inside name field
+nameField.addEventListener('keyup', () => {
+  if (nameField.value === '') {
+    startBtn.disabled = true
   } else {
-    body.style.backgroundImage = "url('assets/img/bg.png')"
+    startBtn.disabled = false
   }
-  changeBackground = !changeBackground
 })
+
+const closeMenu = () => {
+  gameMenu.classList.add('hidden')
+  gameBody.classList.remove('hidden')
+
+  localStorage.setItem('name', nameField.value)
+  audioElement.play()
+}
+
+startForm.addEventListener('submit', (event) => {
+  event.preventDefault()
+})
+startForm.addEventListener('submit', closeMenu)
