@@ -6,27 +6,33 @@
 
 - [About](#about)
 - [Getting Started](#getting_started)
-- [Usage](#usage)
-- [Contributing](#contributing)
+- [Contribution](#contribution)
+- [Special Thanks](#special__thanks)
+
 
 ## 🤔About <a name = "about"></a>
 
----
 
 Jupiter Shooter is web game made with Javascript, and also Html and CSS for styling and layout.
 The goal of the game is simple, defeat all your opponents in the shortest amount of time.
 
 Here's how it would look like :
 
+
+https://user-images.githubusercontent.com/108645205/234337547-4f28469c-3090-4504-9024-7818fc06393d.mp4
+
+
+
 ### Things this project needs :
 
 ~~1. Basic Resources for the game (Characters, Audio, etc.)~~
+
 ~~2. Layout and styling of the website~~ 
+
 3. Basic game functionality
 
 ## 🏁Getting Started <a name = "getting_started"></a>
 
----
 
 Here's how you get started on developing the project, and to run the game locally on you computer. See [contribution](#deployment) for notes on how you can contribute into the project.
 
@@ -55,8 +61,6 @@ git clone https://github.com/korban-mantan/Jupiter-shooter.git
 
 
 ## 🤝Contribution <a name = "contribution"></a>
-
----
 
 Feel free to contribute into this project.
 
@@ -106,14 +110,13 @@ Don't forget to submit your changes by creating a new pull request in the reposi
 
 And voila! you're pretty much done.
 
-## Special Thanks
+## Special Thanks <a name ="special__thanks"></a>
 
----
 
 - Add your name here after contributing
 
 ## Keep in touch
 
 <a href="https://instagram.com/diki.isme">
-  <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/brands/instagram.svg" width="50" height="50">
+  <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/brands/instagram.svg" color="#fff" width="50" height="50">
   </a>
