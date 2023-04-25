@@ -1,0 +1,105 @@
+@font-face {
+    font-family: KdamThmorPro;
+    src: url(./assets/font/KdamThmorPro-Regular.ttf);
+  }
+  
+  * {
+    font-family: KdamThmorPro;
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-image: url(./assets/img/bg.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    overflow: hidden;
+  }
+  
+  button {
+    display: flex;
+    background: #dca311;    
+    color: #fff;
+    width: 10%;
+    height: 5%;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    border: #fff 1px solid;
+    border-radius: 10px;
+  }
+  
+  button:hover {
+    background: #946d0b;
+    cursor: pointer;
+  }
+  button:active {
+    background: #fff;
+    color: #000;
+    border: #000 1px solid;
+  }
+  
+  .game {
+    display: grid;
+    grid-template-rows:
+      10%
+      80%
+      10%;
+    width: 100vw;
+    height: 100vh;
+  }
+  .timer,
+  .button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .timer {
+    color: #fff;
+  }
+  .top,
+  .mid,
+  .bottom {
+    display: grid;
+    grid-template-columns: 20% 60% 20%;
+  }
+  
+  .card {
+    width: 80%;
+    height: 100%;
+    text-align: center;
+    align-items: center;
+    overflow: hidden;
+    border: #000 2px solid;
+    border-radius: 20px;
+  }
+  
+  .exit {
+    position: fixed;
+  }
+  
+  .pause {
+    position: fixed;
+  }
+  
+  .mute {
+    position: fixed;
+    justify-self: center;
+  }
+  
+  .card > .card-header {
+    background: #dca311;
+    color: #fff;
+    width: 100%;
+  }
+  
+  .card > .card-body {
+    background: #fff;
+    width: 100%;
+    height: 100%;
+    font-size: 24px;
+    color: tomato;
+    text-align: center;
+  }
+  
