@@ -13,7 +13,7 @@
     />
   </head>
   <body id="body">
-    <div class="game-menu" id="gameMenu">
+    <div class="game-menu hidden" id="gameMenu">
       <div class="header">
         <h1 class="title">Jupiter Shooter</h1>
         <p class="desc">Beat the opponent and conquer jupiter!</p>
@@ -40,7 +40,7 @@
       <source src="./assets/audio/bg.mp3" type="audio/mp3" />
     </audio>
 
-    <div class="game hidden" id="game">
+    <div class="game" id="game">
       <div class="top">
         <div class="card card1">
           <div class="card-header">
@@ -68,7 +68,9 @@
         <div class="button">
           <button class="exit" id="exitBtn">Exit Game</button>
         </div>
-          <canvas id="canvas"></canvas>
+        <div class="canvas">
+          <canvas id="canvas" width="800px" height="600px"></canvas>
+        </div>
         <div class="button">
           <button class="pause" id="togglePause">Pause</button>
         </div>

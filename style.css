@@ -156,12 +156,11 @@ font-size: 1.5rem;
   justify-self: center;
 }
 
+.canvas {
+  display: grid;
+  place-items: center;
+}
 
 .hidden {
   display: none;
-}
-
-#canvas {
-  width: 100%;
-  height: 100%;
 }
