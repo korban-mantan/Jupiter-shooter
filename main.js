@@ -1,3 +1,33 @@
+/** Start menu functions */
+const startForm = document.getElementById('inputField')
+const nameField = document.getElementById('nameField')
+const startBtn = document.getElementById('startBtn')
+const gameMenu = document.getElementById('gameMenu')
+const gameBody = document.getElementById('game')
+
+// Disable button when there is no value inside name field
+nameField.addEventListener('keyup', () => {
+  if (nameField.value === '') {
+    startBtn.disabled = true
+  } else {
+    startBtn.disabled = false
+  }
+})
+
+// Close menu and set name to localhost
+const closeMenu = () => {
+  gameMenu.classList.add('hidden')
+  gameBody.classList.remove('hidden')
+
+  localStorage.setItem('name', nameField.value)
+  audioElement.play()
+}
+
+startForm.addEventListener('submit', (event) => {
+  event.preventDefault()
+  closeMenu()
+})
+
 // autoplay music and mute function
 const audioElement = document.getElementById('bgMusic')
 const muteButton = document.getElementById('mute')
@@ -18,32 +48,3 @@ muteButton.addEventListener('click', () => {
   // save muted state to local storage
   localStorage.setItem('isMuted', audioElement.muted)
 })
-
-/** close menu and start game */
-const startForm = document.getElementById('inputField')
-const nameField = document.getElementById('nameField')
-const startBtn = document.getElementById('startBtn')
-const gameMenu = document.getElementById('gameMenu')
-const gameBody = document.getElementById('game')
-
-// Disable button when there is no value inside name field
-nameField.addEventListener('keyup', () => {
-  if (nameField.value === '') {
-    startBtn.disabled = true
-  } else {
-    startBtn.disabled = false
-  }
-})
-
-const closeMenu = () => {
-  gameMenu.classList.add('hidden')
-  gameBody.classList.remove('hidden')
-
-  localStorage.setItem('name', nameField.value)
-  audioElement.play()
-}
-
-startForm.addEventListener('submit', (event) => {
-  event.preventDefault()
-})
-startForm.addEventListener('submit', closeMenu)
