@@ -48,54 +48,62 @@ muteButton.addEventListener('click', () => {
   // save muted state to local storage
   localStorage.setItem('isMuted', audioElement.muted)
 })
-
+/* =========== GAME FUCNTIONS =============== */
 const canvas = document.getElementById('canvas')
 const ctx = canvas.getContext('2d')
-const image = new Image()
-image.src = './assets/img/jupiter.png'
 
-image.onload = () => {
-  // const canvasWidth = canvas.width
-  // const canvasHeight = canvas.height
-  // const imageWidth = image.width / 2
-  // const imageHeight = image.height / 2
+const canvasWidth = 800
+const canvasHeight = 600
+canvas.width = canvasWidth
+canvas.height = canvasHeight
 
-  // // Calculate the position where we want to draw the image
-  // const x = canvasWidth / 2 - imageWidth / 2
-  // const y = canvasHeight / 2 - imageHeight / 2
+window.onload = () => {
+  startGame()
+}
 
-  // // Draw the image on the canvas
-  // ctx.drawImage(image, x, y, imageWidth, imageHeight)
+const startGame = () => {
+  drawJupiter()
+}
 
-  let angle = 0
+function drawJupiter () {
+  const jupiter = new Image()
+  jupiter.src = './assets/img/jupiter.png'
 
-  // Define the animation loop
-  function animate () {
+  const jupiterWidth = jupiter.width / 4
+  const jupiterHeight = jupiter.height / 4
+
+  // const x = canvasWidth / 2 - jupiterWidth / 2
+  // const y = canvasHeight / 2 - jupiterHeight / 2
+
+  jupiter.onload = () => {
+    let angle = 0
+
+    // Define the animation loop
+    function animate () {
     // Clear the canvas before drawing the image
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
+      ctx.clearRect(0, 0, canvasWidth, canvasHeight)
 
-    // Save the current context state
-    ctx.save()
+      // Save the current context state
+      ctx.save()
 
-    // Translate the origin to the center of the canvas
-    ctx.translate(canvas.width / 2, canvas.height / 2)
+      // Translate the origin to the center of the canvas
+      ctx.translate(canvasWidth / 2, canvasHeight / 2)
 
-    // Rotate the canvas around the center
-    ctx.rotate(angle * Math.PI / 180)
+      // Rotate the canvas around the center
+      ctx.rotate(angle * Math.PI / 180)
 
-    // Draw the image at the center of the canvas
-    ctx.drawImage(image, -image.width / 8, -image.height / 8, image.width / 4, image.height / 4)
+      // Draw the image at the center of the canvas
+      ctx.drawImage(jupiter, -jupiterWidth / 2, -jupiterHeight / 2, jupiterWidth, jupiterHeight)
 
-    // Restore the context state
-    ctx.restore()
+      // Restore the context state
+      ctx.restore()
 
-    // Increase the angle of rotation for the next frame
-    angle += 1
+      // Increase the angle of rotation for the next frame
+      angle += 0.5
 
-    // Request the next animation frame
-    requestAnimationFrame(animate)
+      // Request the next animation frame
+      requestAnimationFrame(animate)
+    }
+    animate()
   }
-
-  // Start the animation loop
-  animate()
 }
