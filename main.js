@@ -197,7 +197,7 @@ function render () {
           // imageBox.x = 0
           // imageBox.y = 0
           hpElements[i].textContent = 'died'
-          imag  e.src = ''
+          image.src = ''
         }
       }
       updateHP()
