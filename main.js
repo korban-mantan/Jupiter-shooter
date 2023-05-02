@@ -68,8 +68,8 @@ const context = canvas.getContext('2d')
 
 // Define the ball
 const ball = {
-  x: 400, // X position
-  y: 100, // Y position
+  x: canvas.width / 2, // X position
+  y: canvas.height / 2, // Y position
   radius: 10 // Radius
 }
 
@@ -119,22 +119,34 @@ const boxes = [
   { x: 500, y: 400, width: 75, height: 75, hp: 5, hpEl: hpElements[3] }
 ]
 
+let angle = 0
+
 // Define the render function
 function render () {
   // Clear the canvas
   context.clearRect(0, 0, canvas.width, canvas.height)
 
   // Rotate the ball
-  canvas.addEventListener('mousemove', (event) => {
-    ball.x = event.clientX - canvas.offsetLeft
-    ball.y = event.clientY - canvas.offsetTop
-  })
+  // canvas.addEventListener('mousemove', (event) => {
+  //   ball.x = event.clientX - canvas.offsetLeft
+  //   ball.y = event.clientY - canvas.offsetTop
+  // })
+  // Draw the outline
+  context.beginPath()
+  context.arc(ball.x, ball.y, 100, 0, Math.PI * 2)
+  context.fillStyle = 'red'
+  context.stroke()
+
+  const ballX = ball.x + 210 * Math.cos(angle)
+  const ballY = ball.y + 210 * Math.sin(angle)
 
   // Draw the ball
   context.beginPath()
-  context.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2)
+  context.arc(ballX, ballY, ball.radius, 0, Math.PI * 2)
   context.fillStyle = 'red'
   context.fill()
+
+  angle += 0.05
 
   // Draw the images and check for collisions
   for (let i = 0; i < images.length; i++) {
@@ -160,26 +172,31 @@ function render () {
 
     // Check for collision between ball and image
     if (
-      imageBox.x < ball.x + ball.radius &&
-      imageBox.x + imageBox.width > ball.x - ball.radius &&
-      imageBox.y < ball.y + ball.radius &&
-      imageBox.y + imageBox.height > ball.y - ball.radius
+      imageBox.x < ballX + ball.radius &&
+      imageBox.x + imageBox.width > ballX - ball.radius &&
+      imageBox.y < ballY + ball.radius &&
+      imageBox.y + imageBox.height > ballY - ball.radius
     ) {
       const updateHP = () => {
         const heart = '❤'
         image.src = imageHit
-        if (box.hp > 1) {
-          box.hp--
-          hpElements[i].textContent = heart.repeat(box.hp)
-          console.log(box.hp, 'box', i)
-          setTimeout(() => {
-            image.src = sources
-          }, 200)
-          // hitSound.play()
-        } else {
-          hpElements[i].textContent = 'died'
-          image.src = ''
-        }
+        setInterval(() => {
+          if (box.hp > 1) {
+            box.hp--
+            hpElements[i].textContent = heart.repeat(box.hp)
+            console.log(box.hp, 'box', i)
+            setTimeout(() => {
+              image.src = sources
+            }, 200)
+            // hitSound.play()
+          } else {
+            clearInterval()
+            imageBox.x = 0
+            imageBox.y = 0
+            hpElements[i].textContent = 'died'
+            image.src = ''
+          }
+        }, 1000)
       }
       updateHP()
     }
