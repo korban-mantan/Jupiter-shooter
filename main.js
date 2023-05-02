@@ -36,6 +36,8 @@ const bgMusic = document.getElementById('bgMusic')
 const muteButton = document.getElementById('mute')
 const hitSounds = ['./assets/audio/hit-0.wav', './assets/audio/hit-0.wav'] // an array of audio file names
 const hitSound = new Audio(hitSounds[randomIndex]) // randomly selects an audio file and creates a new Audio object
+const onHitSound = new Audio()
+onHitSound.src = './assets/audio/caught.wav'
 
 // check local storage for muted state
 const isMuted = localStorage.getItem('isMuted') === 'true'
@@ -93,10 +95,10 @@ for (let i = 0; i < imageSource.length; i++) {
 }
 
 const imagesOnHit = [
-  'assets/img/bot0-hit.png',
-  'assets/img/bot1-hit.png',
-  'assets/img/bot2-hit.png',
-  'assets/img/bot3-hit.png'
+  'assets/img/bot0-caught.png',
+  'assets/img/bot1-caught.png',
+  'assets/img/bot2-caught.png',
+  'assets/img/bot3-caught.png'
 ]
 
 // Initialize the health system for each box
@@ -113,10 +115,10 @@ for (let i = 0; i < hpElements.length; i++) {
 }
 // Define the bounding boxes for each image
 const boxes = [
-  { x: 500, y: 100, width: 75, height: 75, hp: 5, hpEl: hpElements[0] },
-  { x: 200, y: 100, width: 75, height: 75, hp: 5, hpEl: hpElements[1] },
-  { x: 200, y: 400, width: 75, height: 75, hp: 5, hpEl: hpElements[2] },
-  { x: 500, y: 400, width: 75, height: 75, hp: 5, hpEl: hpElements[3] }
+  { x: 450, y: 100, width: 70, height: 70, hp: 5, hpEl: hpElements[0] },
+  { x: 205, y: 100, width: 70, height: 70, hp: 5, hpEl: hpElements[1] },
+  { x: 205, y: 400, width: 70, height: 70, hp: 5, hpEl: hpElements[2] },
+  { x: 500, y: 400, width: 70, height: 70, hp: 5, hpEl: hpElements[3] }
 ]
 
 let angle = 0
@@ -146,7 +148,7 @@ function render () {
   context.fillStyle = 'red'
   context.fill()
 
-  angle += 0.05
+  angle += 0.04
 
   // Draw the images and check for collisions
   for (let i = 0; i < images.length; i++) {
@@ -158,8 +160,8 @@ function render () {
     const imageBox = {
       x: box.x - box.width / 2,
       y: box.y - box.height / 2,
-      width: box.width * 1.2,
-      height: box.height * 1.2
+      width: box.width * 1.1,
+      height: box.height * 1.1
     }
 
     // Draw the image
@@ -167,8 +169,11 @@ function render () {
     const jupiterHeight = jupiter.height / 3
     const jupiterX = canvas.width / 2 - jupiterWidth / 2
     const jupiterY = canvas.height / 2 - jupiterHeight / 2
+    context.drawImage(images[0], boxes[0].x, boxes[0].y, -box.width, box.height)
+    context.drawImage(images[1], boxes[1].x, boxes[1].y, box.width, box.height)
+    context.drawImage(images[2], boxes[2].x, boxes[2].y, -box.width, box.height)
+    context.drawImage(images[3], boxes[3].x, boxes[3].y, box.width, box.height)
     context.drawImage(jupiter, jupiterX, jupiterY, jupiterWidth, jupiterHeight)
-    context.drawImage(image, box.x, box.y, box.width, box.height)
 
     // Check for collision between ball and image
     if (
@@ -179,24 +184,21 @@ function render () {
     ) {
       const updateHP = () => {
         const heart = '❤'
-        image.src = imageHit
-        setInterval(() => {
-          if (box.hp > 1) {
-            box.hp--
-            hpElements[i].textContent = heart.repeat(box.hp)
-            console.log(box.hp, 'box', i)
-            setTimeout(() => {
-              image.src = sources
-            }, 200)
-            // hitSound.play()
-          } else {
-            clearInterval()
-            imageBox.x = 0
-            imageBox.y = 0
-            hpElements[i].textContent = 'died'
-            image.src = ''
-          }
-        }, 1000)
+        image.src = 'https://us-tuna-sounds-images.voicemod.net/95919aa5-aff2-42e9-9b22-6800bbb39ff2-1654743157862.png'
+        if (box.hp > 1) {
+          box.hp--
+          hpElements[i].textContent = heart.repeat(box.hp)
+          console.log(box.hp, 'box', i)
+          onHitSound.play()
+          setTimeout(() => {
+            image.src = sources
+          }, 200)
+        } else {
+          // imageBox.x = 0
+          // imageBox.y = 0
+          hpElements[i].textContent = 'died'
+          imag  e.src = ''
+        }
       }
       updateHP()
     }
@@ -204,4 +206,3 @@ function render () {
   // Request the next frame
   requestAnimationFrame(render)
 }
-render()
