@@ -35,6 +35,7 @@ button:active {
 }
 button:disabled{
   background: #dedede;
+  cursor: no-drop;
 }
 
 .game-menu {
