@@ -18,8 +18,8 @@
         <h1 class="title">Jupiter Shooter</h1>
         <p class="desc">Beat the opponent and conquer jupiter!</p>
       </div>
-      <form action="null" id="inputField">
-        <div class="input-field">
+      <div class="input-field">
+        <form action="null" id="inputField">
           <input
             type="text"
             class="name-field"
@@ -28,8 +28,8 @@
             placeholder="Your name here..."
           />
           <button id="startBtn" disabled>Start Game!</button>
-        </div>
-      </form>
+        </form>
+      </div>
       <div class="best-time">
         <p class="footer-text">Your Time Record</p>
         <span class="timer"> 0:00:00 </span>
@@ -37,7 +37,10 @@
     </div>
 
     <audio id="bgMusic" loop>
-      <source src="./assets/audio/Voicy_Dreamybull Ambatukam Earrape.mp3" type="audio/mp3" />
+      <source
+        src="./assets/audio/Voicy_Dreamybull Ambatukam Earrape.mp3"
+        type="audio/mp3"
+      />
     </audio>
 
     <div class="game hidden" id="game">
@@ -56,7 +59,7 @@
         </div>
         <div class="card card2">
           <div class="card-header">
-            <span class="name"id="playerName">Player</span>
+            <span class="name" id="playerName">Player</span>
           </div>
           <div class="card-body">
             <span class="heart" id="playerHp"></span>
@@ -98,6 +101,21 @@
         </div>
       </div>
     </div>
+    <dialog id="postGame" class="overDialog">
+      <div class="postContainer">
+        <div class="postHeader">
+          <h1>Game Over</h1>
+        </div>
+        <div class="postMiddle">
+          <h3>Your time record</h3>
+          <span id="postTimer">00:00:00</span>
+        </div>
+        <div class="postFooter">
+          <button id="postBtn">Start Again</button>
+          <button id="exitBtn">Exit game</button>
+        </div>
+      </div>
+    </dialog>
     <script src="main.js"></script>
   </body>
 </html>

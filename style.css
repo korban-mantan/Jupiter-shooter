@@ -17,7 +17,7 @@ body {
 button {
   width: 10%;
   padding: 1rem;
-  font-size: .8rem;
+  font-size: 0.8rem;
   color: #fff;
   background: #dca311;
   border: #fff 1px solid;
@@ -33,7 +33,7 @@ button:active {
   color: #000;
   border: #000 1px solid;
 }
-button:disabled{
+button:disabled {
   background: #dedede;
   cursor: no-drop;
 }
@@ -57,23 +57,24 @@ button:disabled{
   font-size: 3.5rem;
 }
 
-::placeholder{
+::placeholder {
   color: #fff;
-  opacity: .8;
+  opacity: 0.8;
 }
 
-.header>.desc {
+.header > .desc {
   color: #dca311;
   font-size: 1rem;
 }
 
-.input-field{
+.input-field {
   display: grid;
   place-items: center;
   gap: 1rem;
 }
 
-.name-field{
+.name-field {
+  width: 80%;
   height: 20%;
   padding: 2rem;
   background: transparent;
@@ -86,8 +87,8 @@ button:disabled{
 }
 
 .best-time > .footer-text {
-color: #dca311;
-font-size: 1.5rem;
+  color: #dca311;
+  font-size: 1.5rem;
 }
 
 .game {
@@ -111,7 +112,7 @@ font-size: 1.5rem;
   place-items: center;
   color: #fff;
 }
-.timer > h2{
+.timer > h2 {
   color: #dca311;
 }
 .top,
@@ -128,7 +129,6 @@ font-size: 1.5rem;
   border: #000 2px solid;
   border-radius: 20px;
 }
-
 
 .card > .card-header {
   background: #dca311;
@@ -160,6 +160,38 @@ font-size: 1.5rem;
 .canvas {
   display: grid;
   place-items: center;
+}
+
+.overDialog {
+  background: #dca311;
+  color: #fff;
+  border: none;
+  text-align: center;
+  width: 25rem;
+}
+.postContainer {
+  padding: 20px;
+  display: grid;
+  place-items: center;
+  gap: 1rem;
+}
+.postMidlle {
+  display: grid;
+  place-items: center center;
+}
+.postFooter {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.postFooter > button {
+  background: #d48d09;
+}
+#postBtn {
+  width: fit-content;
+}
+#exitBtn {
+  width: fit-content;
 }
 
 .hidden {

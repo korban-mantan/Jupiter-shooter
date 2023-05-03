@@ -56,7 +56,12 @@ muteButton.addEventListener('click', () => {
   muteButton.innerText = bgMusic.muted ? 'Unmute' : 'Mute'
 
   // save muted state to local storage
-  localStorage.setItem('isMuted', bgMusic.muted, ballHitSound.muted, onHitSound.muted)
+  localStorage.setItem(
+    'isMuted',
+    bgMusic.muted,
+    ballHitSound.muted,
+    onHitSound.muted
+  )
 })
 
 // Get the canvas element
@@ -75,12 +80,15 @@ const ball = {
   y: canvas.height / 2, // Y position
   radius: 10 // Radius
 }
-
+// Function for characters to dodge the ball
+function charDodge (Array, i) {
+  Array[i]--
+}
 const jupiter = new Image()
 jupiter.src = 'assets/img/jupiter.png'
 
 // Define the images
-const images = [new Image(), new Image(), new Image(), new Image()]
+const characters = [new Image(), new Image(), new Image(), new Image()]
 
 // Set the source of each image
 const imageSource = [
@@ -89,18 +97,18 @@ const imageSource = [
   'assets/img/bot2.png',
   'assets/img/bot3.png'
 ]
-// Set the default source for the images
+// Set the default source for the characters
 for (let i = 0; i < imageSource.length; i++) {
   const sources = imageSource[i]
-  images[i].src = sources
+  characters[i].src = sources
 }
 
-const imagesOnHit = [
-  'assets/img/bot0-caught.png',
-  'assets/img/bot1-caught.png',
-  'assets/img/bot2-caught.png',
-  'assets/img/bot3-caught.png'
-]
+// const imagesOnHit = [
+//   'assets/img/bot0-caught.png',
+//   'assets/img/bot1-caught.png',
+//   'assets/img/bot2-caught.png',
+//   'assets/img/bot3-caught.png'
+// ]
 
 // Initialize the health system for each box
 const hpElements = [
@@ -116,11 +124,14 @@ for (let i = 0; i < hpElements.length; i++) {
 }
 // Define the bounding boxes for each image
 const boxes = [
-  { x: 500, y: 100, width: 80, height: 80, hp: 5, hpEl: hpElements[0] },
-  { x: 200, y: 100, width: 80, height: 80, hp: 5, hpEl: hpElements[1] },
-  { x: 200, y: 400, width: 80, height: 80, hp: 5, hpEl: hpElements[2] },
-  { x: 450, y: 400, width: 80, height: 80, hp: 5, hpEl: hpElements[3] }
+  { x: 583, y: 100, width: 100, height: 100, hp: 5, hpEl: hpElements[0] },
+  { x: 136, y: 100, width: 100, height: 100, hp: 5, hpEl: hpElements[1] },
+  { x: 136, y: 420, width: 100, height: 100, hp: 5, hpEl: hpElements[2] },
+  { x: 583, y: 420, width: 100, height: 100, hp: 5, hpEl: hpElements[3] }
 ]
+
+// initialize the game over dialog
+const overDialog = document.getElementById('postGame')
 
 let angle = 0
 
@@ -130,16 +141,6 @@ function render () {
   context.clearRect(0, 0, canvas.width, canvas.height)
 
   // Rotate the ball
-  // canvas.addEventListener('mousemove', (event) => {
-  //   ball.x = event.clientX - canvas.offsetLeft
-  //   ball.y = event.clientY - canvas.offsetTop
-  // })
-  // Draw the outline
-  context.beginPath()
-  context.arc(ball.x, ball.y, 100, 0, Math.PI * 2)
-  context.fillStyle = 'red'
-  context.stroke()
-
   const ballX = ball.x + 210 * Math.cos(angle)
   const ballY = ball.y + 210 * Math.sin(angle)
 
@@ -149,31 +150,71 @@ function render () {
   context.fillStyle = 'red'
   context.fill()
 
-  angle += 0.04
+  angle += 0.05
 
-  // Draw the images and check for collisions
-  for (let i = 0; i < images.length; i++) {
-    const image = images[i]
+  // Draw the characters and check for collisions
+  for (let i = 0; i < characters.length; i++) {
+    const char = characters[i]
     const box = boxes[i]
     const sources = imageSource[i]
-    const imageHit = imagesOnHit[i]
-    // Calculate the bounding box for the image
+    // const imageHit = imagesOnHit[i]
+    // Calculate the bounding box for the char
     const imageBox = {
-      x: box.x / 2 - box.width / 2,
-      y: box.y / 2 - box.height / 2,
-      width: box.width + 15,
-      height: box.height + 15
+      x: box.x,
+      y: box.y,
+      width: 80,
+      height: 80
     }
+    // hitbox
+    // context.beginPath()
+    // context.rect(imageBox.x, imageBox.y, imageBox.width, imageBox.height)
+    // context.fillStyle = '#ddd'
+    // context.fill()
+    context.scale(-1, 1)
 
-    // Draw the image
+    // Draw the char
     const jupiterWidth = jupiter.width / 3
     const jupiterHeight = jupiter.height / 3
     const jupiterX = canvas.width / 2 - jupiterWidth / 2
     const jupiterY = canvas.height / 2 - jupiterHeight / 2
-    context.drawImage(image, box.x, box.y, box.width, box.height)
+    context.drawImage(
+      characters[0],
+      boxes[0].x,
+      boxes[0].y,
+      box.width,
+      box.height
+    )
+    context.drawImage(
+      characters[1],
+      -boxes[1].x,
+      boxes[1].y,
+      box.width,
+      box.height
+    )
+    context.drawImage(
+      characters[2],
+      -boxes[2].x,
+      boxes[2].y,
+      box.width,
+      box.height
+    )
+    context.drawImage(
+      characters[3],
+      boxes[3].x,
+      boxes[3].y,
+      box.width,
+      box.height
+    )
     context.drawImage(jupiter, jupiterX, jupiterY, jupiterWidth, jupiterHeight)
 
-    // Check for collision between ball and image
+    // Controls
+    window.addEventListener('keydown', (event) => {
+      if (event.code === 'ArrowDown') {
+        charDodge(boxes, 0)
+      }
+    })
+
+    // Check for collision between ball and char
     if (
       imageBox.x < ballX + ball.radius &&
       imageBox.x + imageBox.width > ballX - ball.radius &&
@@ -182,25 +223,32 @@ function render () {
     ) {
       const updateHP = () => {
         const heart = '❤'
-        image.src = 'https://us-tuna-sounds-images.voicemod.net/95919aa5-aff2-42e9-9b22-6800bbb39ff2-1654743157862.png'
-        if (box.hp >= 1) {
+        char.src = './assets/img/ambatukam.webp'
+        if (box.hp <= 1) {
+          char.src = ''
+          hpElements[i].textContent = 'died'
+        } else {
+          onHitSound.play()
           box.hp--
           hpElements[i].textContent = heart.repeat(box.hp)
           console.log(box.hp, 'box', i)
-          onHitSound.play()
           setTimeout(() => {
-            image.src = sources
+            char.src = sources
           }, 150)
-        } else {
-          // imageBox.x = 0
-          // imageBox.y = 0
-          hpElements[i].textContent = 'died'
-          image.src = ''
         }
       }
       updateHP()
     }
   }
-  // Request the next frame
-  requestAnimationFrame(render)
+
+  // Check if all opponents has died and player is still alive
+  if (
+    boxes[0].hp === 0
+  ) {
+    cancelAnimationFrame(render)
+    overDialog.showModal()
+  } else {
+    // Request the next frame
+    requestAnimationFrame(render)
+  }
 }
