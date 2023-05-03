@@ -1,7 +1,5 @@
 # Jupiter Shooter
-<a href="korban-mantan.github.io/jupiter-shooter">
-  bg.png
-</a>
+
 ## Table of Contents
 
 - [About](#about)
@@ -9,7 +7,7 @@
 - [Contribution](#contribution)
 - [Special Thanks](#special__thanks)
 
-
+bg.png
 ## 🤔About <a name = "about"></a>
 
 
