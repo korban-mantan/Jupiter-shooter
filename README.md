@@ -1,7 +1,7 @@
 # Jupiter Shooter
-
-![Jupiter Shooter](./assets/img/bg.png)
-
+<a href="korban-mantan.github.io/jupiter-shooter">
+  bg.png
+</a>
 ## Table of Contents
 
 - [About](#about)
