@@ -34,8 +34,8 @@ startForm.addEventListener('submit', (event) => {
 const randomIndex = Math.floor(Math.random() * 2) // generates a random number between 0 and 1
 const bgMusic = document.getElementById('bgMusic')
 const muteButton = document.getElementById('mute')
-const hitSounds = ['./assets/audio/hit-0.wav', './assets/audio/hit-0.wav'] // an array of audio file names
-const hitSound = new Audio(hitSounds[randomIndex]) // randomly selects an audio file and creates a new Audio object
+const ballHitSounds = ['./assets/audio/hit-0.wav', './assets/audio/hit-0.wav'] // an array of audio file names
+const ballHitSound = new Audio(ballHitSounds[randomIndex]) // randomly selects an audio file and creates a new Audio object
 const onHitSound = new Audio()
 onHitSound.src = './assets/audio/caught.wav'
 
@@ -44,18 +44,19 @@ const isMuted = localStorage.getItem('isMuted') === 'true'
 
 // set initial muted state
 bgMusic.muted = isMuted
-hitSound.muted = isMuted
+ballHitSound.muted = isMuted
 // update button text
 muteButton.innerText = isMuted ? 'Unmute' : 'Mute'
 
 // add click event listener to toggle mute state and update button text
 muteButton.addEventListener('click', () => {
   bgMusic.muted = !bgMusic.muted
-  hitSound.muted = !hitSound.muted
+  ballHitSound.muted = !ballHitSound.muted
+  onHitSound.muted = !onHitSound.muted
   muteButton.innerText = bgMusic.muted ? 'Unmute' : 'Mute'
 
   // save muted state to local storage
-  localStorage.setItem('isMuted', bgMusic.muted, hitSound.muted)
+  localStorage.setItem('isMuted', bgMusic.muted, ballHitSound.muted, onHitSound.muted)
 })
 
 // Get the canvas element
@@ -115,10 +116,10 @@ for (let i = 0; i < hpElements.length; i++) {
 }
 // Define the bounding boxes for each image
 const boxes = [
-  { x: 450, y: 100, width: 70, height: 70, hp: 5, hpEl: hpElements[0] },
-  { x: 205, y: 100, width: 70, height: 70, hp: 5, hpEl: hpElements[1] },
-  { x: 205, y: 400, width: 70, height: 70, hp: 5, hpEl: hpElements[2] },
-  { x: 500, y: 400, width: 70, height: 70, hp: 5, hpEl: hpElements[3] }
+  { x: 500, y: 100, width: 80, height: 80, hp: 5, hpEl: hpElements[0] },
+  { x: 200, y: 100, width: 80, height: 80, hp: 5, hpEl: hpElements[1] },
+  { x: 200, y: 400, width: 80, height: 80, hp: 5, hpEl: hpElements[2] },
+  { x: 450, y: 400, width: 80, height: 80, hp: 5, hpEl: hpElements[3] }
 ]
 
 let angle = 0
@@ -158,10 +159,10 @@ function render () {
     const imageHit = imagesOnHit[i]
     // Calculate the bounding box for the image
     const imageBox = {
-      x: box.x - box.width / 2,
-      y: box.y - box.height / 2,
-      width: box.width * 1.1,
-      height: box.height * 1.1
+      x: box.x / 2 - box.width / 2,
+      y: box.y / 2 - box.height / 2,
+      width: box.width + 15,
+      height: box.height + 15
     }
 
     // Draw the image
@@ -169,10 +170,7 @@ function render () {
     const jupiterHeight = jupiter.height / 3
     const jupiterX = canvas.width / 2 - jupiterWidth / 2
     const jupiterY = canvas.height / 2 - jupiterHeight / 2
-    context.drawImage(images[0], boxes[0].x, boxes[0].y, -box.width, box.height)
-    context.drawImage(images[1], boxes[1].x, boxes[1].y, box.width, box.height)
-    context.drawImage(images[2], boxes[2].x, boxes[2].y, -box.width, box.height)
-    context.drawImage(images[3], boxes[3].x, boxes[3].y, box.width, box.height)
+    context.drawImage(image, box.x, box.y, box.width, box.height)
     context.drawImage(jupiter, jupiterX, jupiterY, jupiterWidth, jupiterHeight)
 
     // Check for collision between ball and image
@@ -185,14 +183,14 @@ function render () {
       const updateHP = () => {
         const heart = '❤'
         image.src = 'https://us-tuna-sounds-images.voicemod.net/95919aa5-aff2-42e9-9b22-6800bbb39ff2-1654743157862.png'
-        if (box.hp > 1) {
+        if (box.hp >= 1) {
           box.hp--
           hpElements[i].textContent = heart.repeat(box.hp)
           console.log(box.hp, 'box', i)
           onHitSound.play()
           setTimeout(() => {
             image.src = sources
-          }, 200)
+          }, 150)
         } else {
           // imageBox.x = 0
           // imageBox.y = 0
